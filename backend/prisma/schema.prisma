@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================
+// CORE ENTITIES
+// ========================
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String
+  username      String    @unique
+  email         String    @unique
+  password      String    // bcrypt hashed
+  profileBio    String?
+  profilePicUrl String?   // Cloudinary URL
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  recipes       Recipe[]
+  ratings       Rating[]
+  mealPlans     MealPlan[]
+
+  @@map("users")
+}
+
+model Recipe {
+  id           Int       @id @default(autoincrement())
+  title        String
+  instructions String    @db.Text
+  cookingTime  Int       // in minutes
+  calories     Int       @default(0)
+  protein      Int       @default(0)
+  carbs        Int       @default(0)
+  fats         Int       @default(0)
+  imageUrl     String?   // Cloudinary URL
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Foreign Key
+  authorId     Int
+  author       User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Relations
+  ingredients   RecipeIngredient[]
+  dietaryTags   RecipeDietaryTag[]
+  tasteTags     RecipeTasteTag[]
+  ratings       Rating[]
+  mealPlanItems MealPlanItem[]
+
+  @@map("recipes")
+}
+
+model Ingredient {
+  id      Int    @id @default(autoincrement())
+  name    String @unique
+
+  // Relations
+  recipes RecipeIngredient[]
+
+  @@map("ingredients")
+}
+
+model DietaryTag {
+  id      Int    @id @default(autoincrement())
+  tagName String @unique
+
+  // Relations
+  recipes RecipeDietaryTag[]
+
+  @@map("dietary_tags")
+}
+
+model TasteTag {
+  id        Int    @id @default(autoincrement())
+  tasteName String @unique
+
+  // Relations
+  recipes RecipeTasteTag[]
+
+  @@map("taste_tags")
+}
+
+model Rating {
+  id           Int   @id @default(autoincrement())
+  tasteScore   Float // 1-5
+  healthScore  Float // 1-5
+  overallScore Float // 1-5
+  createdAt    DateTime @default(now())
+
+  // Foreign Keys
+  userId   Int
+  recipeId Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  // Constraint: One rating per user per recipe
+  @@unique([userId, recipeId])
+  @@map("ratings")
+}
+
+model MealPlan {
+  id            Int      @id @default(autoincrement())
+  date          DateTime
+  totalCalories Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  // Foreign Key
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  items MealPlanItem[]
+
+  @@map("meal_plans")
+}
+
+// ========================
+// JUNCTION TABLES
+// ========================
+
+model RecipeIngredient {
+  quantity     String // e.g., "2 cups", "100g"
+
+  // Composite Key
+  recipeId     Int
+  ingredientId Int
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, ingredientId])
+  @@map("recipe_ingredients")
+}
+
+model RecipeDietaryTag {
+  recipeId Int
+  tagId    Int
+  recipe   Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  tag      DietaryTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, tagId])
+  @@map("recipe_dietary_tags")
+}
+
+model RecipeTasteTag {
+  recipeId Int
+  tasteId  Int
+  recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  taste    TasteTag @relation(fields: [tasteId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, tasteId])
+  @@map("recipe_taste_tags")
+}
+
+model MealPlanItem {
+  id       Int    @id @default(autoincrement())
+  mealType String // "Breakfast" | "Lunch" | "Dinner"
+
+  // Foreign Keys
+  mealPlanId Int
+  recipeId   Int
+  mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+  recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@map("meal_plan_items")
+}
