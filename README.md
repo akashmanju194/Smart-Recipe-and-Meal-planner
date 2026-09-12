@@ -58,7 +58,8 @@ Node.js / Express Backend (Render Web Service)
 
 ## Demo
 
-- **Live Website:** [https://smart-recipe-frontend.onrender.com](https://smart-recipe-frontend.onrender.com) *(or your deployed Render URL)*
+- **Live Website:** [https://smart-recipe-frontend-vccs.onrender.com](https://smart-recipe-frontend-vccs.onrender.com)
+- **Backend API (Health Check):** [https://smart-recipe-backend-fzw2.onrender.com/api/health](https://smart-recipe-backend-fzw2.onrender.com/api/health)
 - **Demo Account Email:** `demo@smartrecipe.app`
 - **Demo Account Password:** `SmartRecipeDemo@2026`
 
