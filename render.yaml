@@ -42,4 +42,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        value: https://smart-recipe-backend.onrender.com/api
+        value: https://smart-recipe-backend-fzw2.onrender.com/api
