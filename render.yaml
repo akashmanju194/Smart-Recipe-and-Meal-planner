@@ -15,7 +15,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false
+        value: postgresql://neondb_owner:npg_qIubg9hYr8Vz@ep-polished-violet-axonu0vc-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
@@ -43,4 +43,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://smart-recipe-backend.onrender.com/api
