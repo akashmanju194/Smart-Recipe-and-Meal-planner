@@ -30,8 +30,9 @@ services:
   # ==========================================
   # Frontend Static Site (React/Vite/Tailwind)
   # ==========================================
-  - type: static
+  - type: web
     name: smart-recipe-frontend
+    runtime: static
     plan: free
     region: oregon
     rootDir: frontend
