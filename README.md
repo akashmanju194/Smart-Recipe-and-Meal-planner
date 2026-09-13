@@ -1,273 +1,237 @@
-# 🥗 SmartRecipe
+# 🥗 SmartRecipe & Meal Planner
 
-A full-stack culinary platform allowing users to discover recipes, manage nutritional goals via visual meal plans, and interact with a community of recipe authors.
-
----
-
-## Overview
-
-SmartRecipe is designed to bridge the gap between recipe discovery and nutritional planning. Users can explore a curated library of culinary creations across diverse taste profiles and dietary requirements, view comprehensive macronutrient breakdowns (calories, protein, carbs, fats), plan weekly meals with visual macro dashboards, and share their own kitchen creations.
+A full-stack culinary and nutritional platform allowing users to discover chef-crafted recipes, track macronutrients with visual meal plans, and interact with a community of culinary creators.
 
 ---
 
-## Features
+## 🚀 Live Demo & Deployment
 
-- **Recipe Discovery & Search:** Smart multi-field search across titles, author names, taste profiles, and dietary requirements.
-- **Dynamic Tag Filtering:** Interactive filter system supporting 8 taste profiles (*Spicy, Sweet, Sour, Salty, Bitter, Umami, Savory, Tangy*) and 8 dietary categories (*Vegetarian, Vegan, Gluten-Free, Keto, Paleo, Dairy-Free, Low-Carb, High-Protein*).
-- **Macro & Nutritional Breakdown:** Real-time tracking of calories, protein, carbohydrates, and fats per serving.
-- **Visual Macro Meal Planner:** Weekly calendar grid with circular progress visualization to dynamically track daily calorie and macronutrient targets.
-- **Ratings & Reviews:** Dual-score community ratings (Taste Score and Health Score).
-- **Author Profiles & Community:** Dedicated author pages showcasing user bio, published recipes, and contributions.
-- **Secure Authentication:** Standard JWT-based authentication with bcrypt-hashed passwords.
-- **Responsive Modern UI:** Fast, mobile-first design built with Tailwind CSS, Lucide icons, and modern typography.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **Frontend** | React 19, Vite, Tailwind CSS, Lucide-React, Axios, React Router 7 |
-| **Backend** | Node.js, Express 5, CORS, JSONWebToken, bcryptjs |
-| **Database** | PostgreSQL hosted on Neon (Serverless) |
-| **ORM** | Prisma 6.9 |
-| **Hosting** | Render (Static Site for Frontend, Web Service for Backend) |
-| **Media Storage** | Cloudinary (Optional, for image uploads) |
-
----
-
-## Architecture
-
-```
-React / Vite Frontend (Render Static Site)
-             │
-             │ HTTPS / REST API
-             ▼
-Node.js / Express Backend (Render Web Service)
-             │
-             │ Prisma ORM Client
-             ▼
-      Neon PostgreSQL (Serverless Cloud Database)
-```
-
-- **Frontend Client:** Decoupled single-page application (SPA) communicating with the backend via REST endpoints with JWT bearer token authentication.
-- **Backend API:** Stateless Express application providing structured routes for authentication, recipe query/search, meal planning, ratings, and image uploads.
-- **Database Layer:** Prisma schema defining relational models (`User`, `Recipe`, `Ingredient`, `DietaryTag`, `TasteTag`, `Rating`, `MealPlan`, `MealPlanItem`) deployed with SQL migrations.
-
----
-
-## Demo
-
-- **Live Website:** [https://smart-recipe-frontend-vccs.onrender.com](https://smart-recipe-frontend-vccs.onrender.com)
+- **Frontend Application:** [https://smart-recipe-frontend-vccs.onrender.com](https://smart-recipe-frontend-vccs.onrender.com)
 - **Backend API (Health Check):** [https://smart-recipe-backend-fzw2.onrender.com/api/health](https://smart-recipe-backend-fzw2.onrender.com/api/health)
-- **Demo Account Email:** `demo@smartrecipe.app`
-- **Demo Account Password:** `SmartRecipeDemo@2026`
+- **Pre-configured Demo Account:**
+  - **Email:** `demo@smartrecipe.app`
+  - **Password:** `SmartRecipeDemo@2026`
+
+> **Note on Free Tier Cold Starts:** The backend is hosted on Render's free tier. If the service has been idle, the initial request may take ~30–50 seconds to spin up. Once awake, performance is instant.
 
 ---
 
-## Running Locally
+## ✨ Features
+
+### 🔍 1. Smart Recipe Discovery & Instant Search
+- **Instant Search:** Search across recipe titles, author names, descriptions, and ingredients in real-time.
+- **Dual Tag Filtering System:**
+  - **8 Taste Profiles:** *Spicy, Sweet, Sour, Salty, Bitter, Umami, Savory, Tangy*.
+  - **8 Dietary Categories:** *Vegetarian, Vegan, Gluten-Free, Keto, Paleo, Dairy-Free, Low-Carb, High-Protein*.
+- **Multi-tag Combination:** Filter by taste and dietary requirements simultaneously to pinpoint the exact dish for any craving or diet.
+- **Sorting Options:** Sort recipes by newest, cooking time, calories (low-to-high / high-to-low), or community rating.
+
+### 🍽️ 2. Comprehensive Recipe Details
+- **Appetizing Visuals:** Curated high-resolution culinary photography for every recipe.
+- **Macronutrient Breakdown:** Exact per-serving nutritional metrics:
+  - Calories (kcal)
+  - Protein (g)
+  - Carbohydrates (g)
+  - Healthy Fats (g)
+- **Interactive Ingredients List:** Full ingredient quantities, units, and preparation notes.
+- **Step-by-Step Cooking Guide:** Clear numbered instructions with preparation and cooking time estimates.
+
+### 📅 3. Visual Macro Meal Planner
+- **Weekly Calendar Grid:** Plan meals across Monday through Sunday for Breakfast, Lunch, Dinner, and Snacks.
+- **Dynamic Circular Macro Rings:** Animated SVG progress meters that visually track:
+  - Total Calories against daily goal
+  - Protein (g) progress
+  - Carbohydrate (g) progress
+  - Fat (g) progress
+- **Modal Recipe Picker:** Seamlessly search and add recipes from the database directly into any meal slot.
+- **Item Removal & Quick Swap:** One-click removal of meals with automatic recalculation of daily nutritional totals.
+
+### ⭐ 4. Dual-Score Rating & Community Feedback
+- **Taste Score (1–5 Stars):** Rate how delicious and flavorful a dish is.
+- **Health Score (1–5 Stars):** Rate how nutritious, wholesome, and energizing the meal feels.
+- **Aggregate Community Ratings:** Transparent breakdown of average ratings and total reviews submitted by users.
+
+### 👤 5. Author Profiles & Zoomable Lightbox
+- **Author Profile Page:** View any chef or user profile (`/profile/:username`), their biography, stats, and published recipe catalog.
+- **Avatar Zoom Modal:** Click any author profile picture (on recipe cards, author hover previews, or profile headers) to open a full-screen, high-resolution zoomed lightbox preview.
+- **Custom Profile Customization:** Authenticated users can upload avatars and customize their culinary bio.
+
+### ✍️ 6. Recipe Creation & Publishing
+- Authenticated users can publish their own recipes with:
+  - Title, description, and cooking time
+  - Image URL or direct file upload
+  - Multiple dietary and taste tag associations
+  - Dynamic ingredient builder (name, quantity, and unit)
+  - Detailed step-by-step instruction builder
+
+### 🔐 7. Authentication & Security
+- Secure registration and login using JSON Web Tokens (JWT) stored safely in client state / local storage.
+- Password hashing using `bcryptjs` with salt rounds.
+- Protected routes on both frontend (React Router guards) and backend (Express JWT middleware).
+
+---
+
+## 🛠️ Tech Stack
+
+| Domain | Technology | Purpose |
+|---|---|---|
+| **Frontend** | React 19 | Declarative component-based UI |
+| | Vite 8 | Fast build tool and dev server |
+| | React Router 7 | Client-side routing and page transitions |
+| | Vanilla CSS / Tailwind CSS | Responsive dark-mode glassmorphism styling |
+| | Lucide React | Modern icons |
+| | Axios & React Hot Toast | HTTP client & toast notifications |
+| **Backend** | Node.js (v20+) | Runtime environment |
+| | Express 5 | Fast, unopinionated REST API framework |
+| | Prisma ORM 6.9 | Type-safe database queries & migrations |
+| | JSONWebToken & bcryptjs | Auth token generation and secure password hashing |
+| | CORS & Multer | Cross-origin request handling & multipart file upload |
+| **Database** | PostgreSQL on Neon | Serverless cloud PostgreSQL with SSL connection pooling |
+| **Cloud Hosting** | Render | Automated CI/CD deployment via `render.yaml` Blueprint |
+
+---
+
+## 🏛️ System Architecture
+
+```
+┌────────────────────────────────────────────────────────┐
+│              React 19 Client (Vite SPA)                │
+│    https://smart-recipe-frontend-vccs.onrender.com     │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ HTTPS / REST API + JWT
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│             Node.js / Express 5 API Server             │
+│     https://smart-recipe-backend-fzw2.onrender.com     │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ Prisma ORM Client (SSL)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│             Neon Serverless PostgreSQL DB              │
+│       ep-polished-violet-axonu0vc-pooler...            │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 💻 Local Development Setup
 
 ### Prerequisites
+- **Node.js** v18+ (Node.js v20 or v22 recommended)
+- **Git**
+- **PostgreSQL** running locally OR a free [Neon](https://neon.tech) database instance
 
-- **Node.js** v18+ (Node.js v22 LTS recommended)
-- **PostgreSQL** running locally or a free cloud instance on [Neon](https://neon.tech)
-- **Docker** *(optional, for running local PostgreSQL in one command)*
-
-### 1. Clone & Install Dependencies
-
+### 1. Clone the Repository
 ```bash
-# Clone the repository
 git clone https://github.com/akashmanju194/Smart-Recipe-and-Meal-planner.git
 cd Smart-Recipe-and-Meal-planner
-
-# Install Frontend dependencies
-cd frontend
-npm install
-
-# Install Backend dependencies
-cd ../backend
-npm install
 ```
 
-### 2. Configure Environment Variables
-
-Create `.env` in the `backend/` directory:
-
+### 2. Configure Backend
 ```bash
 cd backend
-cp .env.example .env
+npm install
 ```
 
-Fill in your local configuration:
-
+Create a `.env` file in `backend/`:
 ```env
 PORT=5001
 FRONTEND_URL=http://localhost:5173
-JWT_SECRET=your_local_development_jwt_secret
+JWT_SECRET=your_super_secret_jwt_key_here
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/smartrecipe?schema=public"
 ```
+*(If using Neon, paste your Neon PostgreSQL pooled connection string into `DATABASE_URL` with `?sslmode=require`)*.
 
-Create `.env` in the `frontend/` directory:
-
+Run database migrations and seed sample recipes:
 ```bash
-cd ../frontend
-cp .env.example .env
+npx prisma migrate dev --name init
+npx prisma db seed
 ```
 
+Start the backend server:
+```bash
+npm run dev
+# Server will start on http://localhost:5001
+```
+
+### 3. Configure Frontend
+Open a new terminal:
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file in `frontend/`:
 ```env
 VITE_API_URL=http://localhost:5001/api
 ```
 
----
-
-## Database Setup
-
-If using Docker to run PostgreSQL locally:
-
+Start the Vite development server:
 ```bash
-docker run -d --name smartrecipe-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=smartrecipe -p 5432:5432 postgres:16-alpine
-```
-
-### Run Migrations & Idempotent Seed
-
-```bash
-cd backend
-
-# Apply migrations
-npx prisma migrate dev --name init
-
-# Seed realistic demo data and the demo account
-npx prisma db seed
-```
-
-*Note: The seed script is completely idempotent. Running `npx prisma db seed` multiple times safely updates or preserves existing records without creating duplicates.*
-
----
-
-## Environment Variables
-
-### Frontend Variables
-
-| Variable | Purpose |
-|---|---|
-| `VITE_API_URL` | Public base URL of the backend API (e.g., `https://smart-recipe-backend.onrender.com/api` or `http://localhost:5001/api`). |
-
-### Backend Variables
-
-| Variable | Purpose |
-|---|---|
-| `PORT` | Port on which the Express server listens (automatically assigned by Render, default `5001` locally). |
-| `DATABASE_URL` | PostgreSQL connection string (supports Neon SSL pooled connection: `postgresql://user:pass@ep-xyz.region.neon.tech/neondb?sslmode=require`). |
-| `JWT_SECRET` | Secret key used for signing and verifying JSON Web Tokens. |
-| `FRONTEND_URL` | Allowed origin(s) for CORS (supports comma-separated origins, localhost, and `.onrender.com`). |
-
-### Optional Third-Party Variables
-
-| Variable | Purpose |
-|---|---|
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary account cloud name for user recipe image uploads. |
-| `CLOUDINARY_API_KEY` | Cloudinary API key. |
-| `CLOUDINARY_API_SECRET` | Cloudinary API secret. |
-
----
-
-## Deployment
-
-This project is configured for automated zero-cost deployment on **Render** using a Blueprint (`render.yaml`) and **Neon** for serverless PostgreSQL.
-
-### Step 1: Create Free Neon PostgreSQL Database
-
-1. Sign up or log in to [Neon](https://neon.tech) (100% free tier, no credit card required).
-2. Create a new project (e.g., `smartrecipe-db`).
-3. Copy the pooled connection string (`DATABASE_URL`), ensuring it ends with `?sslmode=require`.
-
-### Step 2: Push Repository to GitHub
-
-Ensure all changes, including `render.yaml` and `backend/prisma/migrations/`, are committed and pushed to your GitHub repository:
-
-```bash
-git add .
-git commit -m "feat: complete demo-ready SmartRecipe application with Render blueprint"
-git push origin main
-```
-
-### Step 3: Deploy to Render via Blueprint
-
-1. Log in to [Render Dashboard](https://dashboard.render.com).
-2. Click **New +** → **Blueprint**.
-3. Connect your GitHub repository (`akashmanju194/Smart-Recipe-and-Meal-planner`).
-4. Render will parse `render.yaml` and create two services:
-   - **smart-recipe-backend** (Web Service)
-   - **smart-recipe-frontend** (Static Site)
-5. Under environment variables for `smart-recipe-backend`, provide:
-   - `DATABASE_URL`: Your Neon PostgreSQL connection string.
-   - `FRONTEND_URL`: The URL generated for your frontend static site (or leave empty during initial creation and update after).
-6. Under environment variables for `smart-recipe-frontend`, provide:
-   - `VITE_API_URL`: `https://smart-recipe-backend-xxxx.onrender.com/api` (replace with your backend service name).
-7. Click **Apply**.
-
-### Step 4: Seed the Production Database
-
-Once the backend is deployed, populate the production database using Render's Web Shell or locally from your machine:
-
-```bash
-DATABASE_URL="your-neon-database-url?sslmode=require" npx prisma db seed
+npm run dev
+# Frontend will be live on http://localhost:5173
 ```
 
 ---
 
-## Project Structure
+## 📡 REST API Reference
 
-```
-Smart-Recipe-and-Meal-planner/
-├── .gitignore
-├── README.md
-├── render.yaml                    # Infrastructure-as-Code Blueprint for Render
-├── frontend/                      # React + Vite Client
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── .env.example
-│   ├── public/
-│   └── src/
-│       ├── App.jsx                # Application routes and navigation
-│       ├── main.jsx               # Entry point
-│       ├── index.css              # Design system & Tailwind styling
-│       ├── components/            # Reusable UI, Auth, Recipe, and MealPlan components
-│       ├── context/               # AuthContext for session management
-│       ├── hooks/                 # Custom React hooks (useAuth, useRecipes, useMealPlan)
-│       ├── pages/                 # Full pages (HomePage, RecipeDetailPage, MealPlannerPage, etc.)
-│       └── services/              # Axios API client (api.js, authService, recipeService, etc.)
-└── backend/                       # Node.js + Express + Prisma API
-    ├── package.json
-    ├── .env.example
-    ├── prisma/
-    │   ├── schema.prisma          # PostgreSQL relational data schema
-    │   ├── seed.js                # Idempotent seed script (18 recipes + demo user)
-    │   └── migrations/            # Generated SQL migration history
-    └── src/
-        ├── server.js              # Express server entry point & health check
-        ├── config/                # DB, CORS, and Cloudinary configuration
-        ├── controllers/           # Business logic (Auth, Recipes, MealPlans, Ratings)
-        ├── middlewares/           # JWT verification, validation, error handler
-        └── routes/                # Express API route declarations
-```
+### Authentication
+- `POST /api/auth/register` - Create a new user account
+- `POST /api/auth/login` - Authenticate user & receive JWT token
+- `GET /api/auth/me` - Get current authenticated user profile *(Auth required)*
+
+### Recipes
+- `GET /api/recipes` - List recipes with search, taste filter, dietary filter, and sorting
+- `GET /api/recipes/:id` - Get recipe details, ingredients, tags, and ratings
+- `POST /api/recipes` - Create a new recipe *(Auth required)*
+- `PUT /api/recipes/:id` - Update an existing recipe *(Author only)*
+- `DELETE /api/recipes/:id` - Delete a recipe *(Author only)*
+
+### Ratings & Feedback
+- `POST /api/recipes/:id/ratings` - Submit or update Taste Score (1-5) and Health Score (1-5) *(Auth required)*
+
+### Meal Plans
+- `GET /api/meal-plans?weekStart=YYYY-MM-DD` - Fetch weekly meal plan and calculated macros *(Auth required)*
+- `POST /api/meal-plans/items` - Add a recipe to a specific day and meal slot *(Auth required)*
+- `DELETE /api/meal-plans/items/:itemId` - Remove an item from the meal plan *(Auth required)*
+
+### Users & Authors
+- `GET /api/users/:username` - Get public author profile, bio, recipe count, and published recipes
+- `PUT /api/users/profile` - Update user bio and avatar *(Auth required)*
 
 ---
 
-## Sample Data
+## 🗄️ Database Schema Summary
 
-The platform includes an idempotent seed script (`backend/prisma/seed.js`) that provisions:
-- **1 dedicated demo user** (`demo@smartrecipe.app`)
-- **2 community chef profiles**
-- **8 taste tags & 8 dietary tags**
-- **72 common culinary ingredients**
-- **18 realistic sample recipes** with high-resolution imagery, detailed step-by-step instructions, and exact macro counts
-- **Initial ratings** and a **pre-populated meal plan** for the demo user
+The database uses relational tables managed by Prisma:
+- **`User`**: Authentication credentials, profile bio, avatar image URL, timestamps.
+- **`Recipe`**: Title, description, cooking time, calories, macros (protein, carbs, fat), image URL, author reference.
+- **`Ingredient` & `RecipeIngredient`**: Ingredient name, quantity, unit of measurement.
+- **`TasteProfile` & `RecipeTaste`**: Normalized taste tags (Sweet, Spicy, Umami, etc.).
+- **`DietaryRequirement` & `RecipeDietary`**: Normalized dietary tags (Vegan, Keto, Gluten-Free, etc.).
+- **`Rating`**: User reference, recipe reference, tasteScore, healthScore, review comment.
+- **`MealPlan` & `MealPlanItem`**: User reference, week start date, target daily calories, slot (Breakfast, Lunch, Dinner, Snack).
 
 ---
 
-## Limitations
+## 🚢 Deployment on Render
 
-- **Free-Tier Cold Starts:** On Render's free tier, the backend web service spins down after 15 minutes of inactivity. When accessed after inactivity, the first API request may take 30–50 seconds to wake up the service. Subsequent requests will be fast.
-- **Cloudinary Image Uploads:** User image uploads require free Cloudinary credentials configured in the backend environment variables. If omitted, sample recipes will display their existing high-resolution Unsplash images.
+This project includes a native `render.yaml` Blueprint for automated deployment:
+
+1. Push your changes to GitHub.
+2. In the [Render Dashboard](https://dashboard.render.com), select **New +** → **Blueprint**.
+3. Select this repository.
+4. Render automatically configures:
+   - **Backend Web Service (`smart-recipe-backend`)**: Node.js runtime, `npm install && npx prisma migrate deploy`, `node src/server.js`.
+   - **Frontend Static Site (`smart-recipe-frontend`)**: Static CDN, `npm install && npm run build`, publish directory `dist`.
+5. Supply `DATABASE_URL` (Neon PostgreSQL) and `JWT_SECRET`.
+6. Click **Apply** to deploy live!
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

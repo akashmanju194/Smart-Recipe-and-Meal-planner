@@ -412,7 +412,7 @@ async function main() {
       protein: 4,
       carbs: 28,
       fats: 19,
-      imageUrl: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&auto=format&fit=crop&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&auto=format&fit=crop&q=80",
       authorId: sarahUser.id,
       tastes: ["Sweet", "Bitter"],
       dietary: ["Vegan", "Vegetarian", "Gluten-Free", "Dairy-Free", "Paleo"],

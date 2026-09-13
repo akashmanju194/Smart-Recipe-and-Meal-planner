@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import RecipeGrid from "../components/recipe/RecipeGrid";
+import AvatarZoomModal from "../components/ui/AvatarZoomModal";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -9,6 +10,7 @@ const ProfilePage = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [zoomOpen, setZoomOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -35,7 +37,13 @@ const ProfilePage = () => {
     <div className="profile-page">
       {profile && (
         <div className="profile-header">
-          <div className="profile-avatar">
+          <div 
+            className="profile-avatar cursor-zoom-in"
+            title={profile.profilePicUrl ? "Click to zoom profile picture" : ""}
+            onClick={() => {
+              if (profile.profilePicUrl) setZoomOpen(true);
+            }}
+          >
             {profile.profilePicUrl ? (
               <img src={profile.profilePicUrl} alt={profile.name} />
             ) : (
@@ -53,8 +61,17 @@ const ProfilePage = () => {
         <h2>Recipes by @{username}</h2>
         <RecipeGrid recipes={recipes} loading={false} />
       </div>
+
+      <AvatarZoomModal
+        isOpen={zoomOpen}
+        onClose={() => setZoomOpen(false)}
+        imageUrl={profile?.profilePicUrl}
+        name={profile?.name}
+        username={profile?.username}
+      />
     </div>
   );
 };
 
 export default ProfilePage;
+
