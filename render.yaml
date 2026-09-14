@@ -28,10 +28,10 @@ services:
         sync: false
 
   # ==========================================
-  # Frontend Static Site (React/Vite/Tailwind)
+  # Web App Static Site (React/Vite/Tailwind)
   # ==========================================
   - type: web
-    name: smart-recipe-frontend
+    name: smart-recipe
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build

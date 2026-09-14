@@ -4,13 +4,16 @@ A full-stack culinary and nutritional platform allowing users to discover chef-c
 
 ---
 
-## 🚀 Live Demo & Deployment
+## 🚀 Live Application
 
-- **Frontend Application:** [https://smart-recipe-frontend-vccs.onrender.com](https://smart-recipe-frontend-vccs.onrender.com)
-- **Backend API (Health Check):** [https://smart-recipe-backend-fzw2.onrender.com/api/health](https://smart-recipe-backend-fzw2.onrender.com/api/health)
-- **Pre-configured Demo Account:**
-  - **Email:** `demo@smartrecipe.app`
-  - **Password:** `SmartRecipeDemo@2026`
+Explore the live application:
+👉 **[SmartRecipe Web App](https://smart-recipe-frontend-vccs.onrender.com)**
+
+| Access | Details |
+|---|---|
+| **Live Project Link** | [https://smart-recipe-frontend-vccs.onrender.com](https://smart-recipe-frontend-vccs.onrender.com) |
+| **Demo Email** | `demo@smartrecipe.app` |
+| **Demo Password** | `SmartRecipeDemo@2026` |
 
 > **Note on Free Tier Cold Starts:** The backend is hosted on Render's free tier. If the service has been idle, the initial request may take ~30–50 seconds to spin up. Once awake, performance is instant.
 
@@ -95,7 +98,7 @@ A full-stack culinary and nutritional platform allowing users to discover chef-c
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│              React 19 Client (Vite SPA)                │
+│         SmartRecipe Web Application (Vite SPA)         │
 │    https://smart-recipe-frontend-vccs.onrender.com     │
 └───────────────────────────┬────────────────────────────┘
                             │
@@ -226,7 +229,7 @@ This project includes a native `render.yaml` Blueprint for automated deployment:
 3. Select this repository.
 4. Render automatically configures:
    - **Backend Web Service (`smart-recipe-backend`)**: Node.js runtime, `npm install && npx prisma migrate deploy`, `node src/server.js`.
-   - **Frontend Static Site (`smart-recipe-frontend`)**: Static CDN, `npm install && npm run build`, publish directory `dist`.
+   - **Web Application Static Site (`smart-recipe`)**: Static CDN, `npm install && npm run build`, publish directory `dist`.
 5. Supply `DATABASE_URL` (Neon PostgreSQL) and `JWT_SECRET`.
 6. Click **Apply** to deploy live!
 
